@@ -11,7 +11,7 @@ SPLIT="test"
 NUM_TEST_SAMPLE=-1
 OUTPUT_ROOT="eval/matheval/outputs"
 CHECKPOINT_DIR=""
-MODEL_DIRS=("/volume/demo/xlzhuang/zh/models/Qwen2.5-7B-Instruct")
+MODEL_DIRS=()
 
 usage() {
     cat <<EOF
