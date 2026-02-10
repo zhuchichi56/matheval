@@ -3,7 +3,7 @@
 tqdm
 # datasets
 # torch
-# transformers
+transformers
 python_dateutil
 # flash_attn
 
