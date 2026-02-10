@@ -1,7 +1,7 @@
 # common
 # vllm
 tqdm
-# datasets
+datasets
 # torch
 transformers
 python_dateutil
