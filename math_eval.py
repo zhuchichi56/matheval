@@ -317,7 +317,18 @@ def evaluate_with_ray(args, data_name, examples):
     print(f"使用 {world_size} 个GPU: {AVAILABLE_GPUS}")
     
     if not ray.is_initialized():
-        ray.init(num_gpus=world_size, ignore_reinit_error=True)
+        ray_address = os.environ.get("RAY_ADDRESS")
+        if ray_address:
+            print(f"检测到 RAY_ADDRESS={ray_address}，连接到已有 Ray 集群")
+            ray.init(address=ray_address, ignore_reinit_error=True)
+        else:
+            try:
+                # Prefer attaching to an existing cluster when available.
+                ray.init(address="auto", ignore_reinit_error=True)
+                print("已连接到已有 Ray 集群 (address=auto)")
+            except Exception:
+                print(f"未发现可连接的 Ray 集群，启动本地 Ray (num_gpus={world_size})")
+                ray.init(num_gpus=world_size, ignore_reinit_error=True)
     
     try:
         # Create workers

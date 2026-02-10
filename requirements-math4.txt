@@ -1,0 +1,23 @@
+# Core inference
+vllm==0.15.1
+transformers==4.57.6
+torch==2.9.1
+
+# General deps
+ray==2.53.0
+tqdm
+datasets
+numpy
+pandas
+matplotlib
+regex
+multiprocess
+python-dateutil
+
+# math_eval
+sympy==1.14.0
+antlr4-python3-runtime==4.7.2
+latex2sympy2==1.9.1
+word2number
+Pebble
+timeout-decorator
