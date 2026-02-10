@@ -1,10 +1,10 @@
 # common
 # vllm
-tqdm
-datasets
+# tqdm
+# datasets
 # torch
-transformers
-python_dateutil
+# transformers
+# python_dateutil
 # flash_attn
 
 # math_eval
