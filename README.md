@@ -43,6 +43,9 @@ MODEL_NAME_OR_PATH="Qwen/Qwen2-Math-72B-Instruct"
 bash sh/eval.sh $PROMPT_TYPE $MODEL_NAME_OR_PATH
 ```
 
+## TODO
+- [ ] 增加 Qwen3 模版
+
 ## Acknowledgement
 The codebase is adapted from [math-evaluation-harness](https://github.com/ZubinGou/math-evaluation-harness).
 # matheval
