@@ -474,6 +474,38 @@ def setup(args):
         for name, result in zip(data_list, results):
             print(f"{name}: {result.get('acc', 0):.4f}")
 
+        # Write overall metrics summary
+        overall = {}
+        for name, result in zip(data_list, results):
+            overall[name] = {
+                "acc": result.get("acc", 0),
+                "mean_acc": result.get("mean_acc", None),
+                "all_acc": result.get("all_acc", None),
+                "num_samples": result.get("num_samples", None),
+            }
+
+        # Add aggregate metrics across datasets (simple mean, not sample-weighted)
+        dataset_results = [r for r in results[:-1]]  # exclude "avg" entry
+        if dataset_results:
+            acc_vals = [r.get("acc", 0) for r in dataset_results]
+            mean_acc_vals = [r.get("mean_acc", 0) for r in dataset_results]
+            overall["overall"] = {
+                "acc": float(np.mean(acc_vals)),
+                "mean_acc": float(np.mean(mean_acc_vals)),
+                "all_acc": None,
+                "num_samples": int(sum([r.get("num_samples", 0) or 0 for r in dataset_results])),
+            }
+            all_acc_lists = [r.get("all_acc") for r in dataset_results if r.get("all_acc") is not None]
+            if all_acc_lists:
+                min_len = min(len(x) for x in all_acc_lists)
+                if min_len > 0:
+                    trimmed = [x[:min_len] for x in all_acc_lists]
+                    overall["overall"]["all_acc"] = list(np.mean(np.array(trimmed), axis=0))
+
+        overall_file = os.path.join(args.output_dir, "overall_metrics.json")
+        with open(overall_file, "w") as f:
+            json.dump(overall, f, indent=4)
+
 
 if __name__ == "__main__":
     args = parse_args()

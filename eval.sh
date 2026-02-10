@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROMPT_TYPE="plain"
+# PROMPT_TYPE="plain"
+# qwen25-math-cot
+PROMPT_TYPE="qwen25-math-cot"
 N_SAMPLING=16
 TEMPERATURE=1
 DATA_NAME="math_oai,minerva_math,olympiadbench,aime24,aime25,amc23"
@@ -9,7 +11,7 @@ SPLIT="test"
 NUM_TEST_SAMPLE=-1
 OUTPUT_ROOT="eval/matheval/outputs"
 CHECKPOINT_DIR=""
-MODEL_DIRS=()
+MODEL_DIRS=("/volume/demo/xlzhuang/zh/models/Qwen2.5-7B-Instruct")
 
 usage() {
     cat <<EOF
@@ -105,7 +107,7 @@ if [[ ${#MODEL_DIRS[@]} -eq 0 ]]; then
     exit 1
 fi
 
-export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
+export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1,2,3,4,5,6,7}"
 
 for MODEL_PATH in "${MODEL_DIRS[@]}"; do
     NAME=$(basename "${MODEL_PATH}")
